@@ -35,18 +35,6 @@
 		<script src='./Scripts/three.min.js'></script>
 		<script src='./Scripts/keyboard.js'></script>
 		<script type="text/javascript">
-		function setup()
-		{
-
-		  draw();
-		}
-
-
-		function draw()
-		{
-
-		  requestAnimationFrame(draw);
-		}
 
 		/*
 			Three.JS includes 6 important elements
@@ -56,7 +44,74 @@
 				Mesh
 				Light
 				Material
+
+			The renderer is attached to whichever HTML DOM element you wish to render the scene to, and a render() call is made each frame to the renderer in order to draw the Three.js scene.
 		*/
+		// set the scene size
+		var WIDTH = 640;
+		var	HEIGHT = 360;
+
+		/****************   CAMERA    ****************/
+		//set up the attributes
+		var CAMERA_ANGLE = 45; 	//45 degrees wrt the origin in our space
+		var ASPECT_RATIO = WIDTH/HEIGHT;
+		var NEAR_PLANE = 0.1; 	//clipping plane slghtly in front of the camera
+		var FAR_PLANE = 10000;
+		//create the camera & add the attributes
+		var camera = new THREE.PerspectiveCamera(
+					    VIEW_ANGLE,
+					    ASPECT,
+					    NEAR,
+					    FAR);
+		//set the useful position of the camera - z-axis implies that it is pointing outwards from the screen
+		camera.position.z = 300;
+
+		/****************   SCENE    ****************/
+		//define the scene 
+		var scene = new THREE.Scene();
+		//add the camera to the scene
+		scene.add(camera);
+
+		/****************   RENDERER    ****************/
+		//create the WebGL renderer
+		var renderer = new  THREE.WebGLRenderer();
+		//start the renderer
+		renderer.setSize(WIDTH, HEIGHT);
+		//add the DOM element where you want the renderer to work its magic
+		var c = document.getElementById("gameCanvas");
+		c.appendChild(renderer.domElement);
+
+		/****************   PING PONG BALL    ****************/
+		// Set up the sphere values
+		// lower 'segment' and 'ring' values will increase performance
+		var radius = 5,
+			segments = 6,
+			rings = 6;
+		//create the sphere's material - 
+		var sphereMaterial = new THREE.MeshLambertMaterial(
+		{
+			color: 0xD43001;
+			wireframe: true;
+		});
+
+
+		function setup()
+		{
+		  draw();
+		}
+
+
+		function draw()
+		{
+			//Draw the Three.js Scene
+			renderer.render(scene, camera);
+
+			//loop he draw() function
+			requestAnimationFrame(draw);
+		}
+
+
+
 		</script>
 		<div id='scoreboard'>
 			<h1 id='scores'>0-0</h1>
