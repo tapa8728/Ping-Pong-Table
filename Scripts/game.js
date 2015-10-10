@@ -103,6 +103,50 @@
 
 		scene.add(plane);
 
+		// ------------------------------------------------------------------------------------------
+		/****************   PADDLES ON SIDES OF PLANE    ****************/
+		// set up the paddle attributes
+		paddleWidth = 10;
+		paddleHeight = 30;
+		paddleDepth = 10;
+		paddleQuality = 1;
+
+		// set up paddle 1
+		paddle1 = new THREE.Mesh(
+		  new THREE.CubeGeometry(
+			paddleWidth,
+			paddleHeight,
+			paddleDepth,
+			paddleQuality,
+			paddleQuality,
+			paddleQuality),
+		  paddle1Material);
+
+		// add the paddle to the scene
+		scene.add(paddle1);
+
+		// Set up the second paddle
+		paddle2 = new THREE.Mesh(
+		  new THREE.CubeGeometry(
+			paddleWidth,
+			paddleHeight,
+			paddleDepth,
+			paddleQuality,
+			paddleQuality,
+			paddleQuality),
+		  paddle2Material);
+
+		// Add the second paddle to the scene
+		scene.add(paddle2);
+
+		// set the position of paddles on each side of the table
+		paddle1.position.x = -fieldWidth/2 + paddleWidth;
+		paddle2.position.x = fieldWidth/2 - paddleWidth;
+
+		// lift paddles over playing surface
+		paddle1.position.z = paddleDepth;
+		paddle2.position.z = paddleDepth;
+		
 		//called on body load
 		function setup()
 		{
